@@ -1,0 +1,16 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Logs
+*.log
+
+# Local sensitive config
+.env
+config.php
+
+# Ignore full database backups, but allow schema
+backup_*.sql
+dump_*.sql
+includes/db.php

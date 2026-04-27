@@ -1,0 +1,7 @@
+1. XAMPP асаана
+2. Apache Start
+3. MySQL Start
+4. phpMyAdmin дээр database SQL ажиллуулна
+5. htdocs/beauty_salon folder үүсгэнэ
+6. Дээрх файлуудыг үүсгээд кодоо paste хийнэ
+7. Browser дээр орно:

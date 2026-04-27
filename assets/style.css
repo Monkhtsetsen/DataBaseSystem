@@ -1,0 +1,51 @@
+body {
+    background: #faf7f2;
+    color: #2f2a26;
+    font-family: Arial, sans-serif;
+}
+
+.custom-nav {
+    background: #8c5e3c;
+}
+
+.hero {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.btn-main {
+    background: #b9855b;
+    color: white;
+    border: none;
+}
+
+.btn-main:hover {
+    background: #8c5e3c;
+    color: white;
+}
+
+.price {
+    color: #8c5e3c;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+.success-box {
+    background: #d1e7dd;
+    color: #0f5132;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
