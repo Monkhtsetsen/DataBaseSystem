@@ -376,6 +376,12 @@ include "includes/header.php";
         </div>
     <?php } ?>
 
+    <div class="alert alert-danger mb-4" style="border-left:5px solid #b00020;">
+        <strong>Анхааруулга:</strong>
+        Захиалсан цаг эхлэхээс хамгийн багадаа <strong>24 цагийн өмнө</strong> цуцлах боломжтой.
+        24 цагаас бага хугацаа үлдсэн үед захиалгаа системээр цуцлах боломжгүй.
+    </div>
+
     <form method="POST" id="bookForm">
 
         <div class="mb-4" id="step1">
