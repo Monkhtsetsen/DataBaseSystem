@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('customer', 'admin') DEFAULT 'customer',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+UPDATE users 
+SET role = 'admin' 
+WHERE email = 'admin@gmail.com';
 
 CREATE TABLE IF NOT EXISTS services (
     id INT AUTO_INCREMENT PRIMARY KEY,
