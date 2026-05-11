@@ -21,16 +21,11 @@ CREATE TABLE IF NOT EXISTS staff_schedule (
     FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
 );
 
--- appointments хүснэгтэд staff_id байхгүй бол нэмнэ.
--- Хэрэв таны MySQL ADD COLUMN IF NOT EXISTS дэмжихгүй бол энэ мөрөн дээр алдаа гарвал
--- phpMyAdmin дээр appointments хүснэгтэд staff_id INT NULL багана гараар нэмээд дараагийн мөрүүдийг ажиллуулж болно.
 ALTER TABLE appointments ADD COLUMN IF NOT EXISTS staff_id INT DEFAULT NULL;
 
--- FK-г тусад нь нэмэх. Давхар FK алдаа гарвал энэ мөрийг алгасаж болно.
 ALTER TABLE appointments
     ADD CONSTRAINT fk_appt_staff_fixed FOREIGN KEY (staff_id) REFERENCES staff(id);
 
--- Жишээ артистууд: үсчин, маникюрч, makeup, сормуус бүгд байна.
 INSERT INTO staff (full_name, role, role_label, bio, avatar_initials, is_active)
 SELECT * FROM (
     SELECT 'Нарантуяа Б.' AS full_name, 'hairstylist' AS role, 'Үсчин' AS role_label, '10 жилийн туршлагатай, тренд засалтын мэргэжилтэн.' AS bio, 'НБ' AS avatar_initials, 1 AS is_active
@@ -52,6 +47,7 @@ CREATE PROCEDURE generate_staff_schedule_3_months()
 BEGIN
     DECLARE i INT DEFAULT 0;
     DECLARE d DATE;
+
 
     -- Өнөөдрөөс эхлээд 3 сар урагш бүх идэвхтэй артистад хуваарь үүсгэнэ.
     -- Ням гарагт is_working=0, бусад өдөр is_working=1.

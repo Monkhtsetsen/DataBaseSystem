@@ -53,7 +53,7 @@ $query = "
         appointments.appointment_date DESC,
         appointments.appointment_time DESC
 ";
-
+// query dotor baigaa SQL commandiig database ruu yavuulj bna
 $result = mysqli_query($conn, $query);
 
 /* Status label */

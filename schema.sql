@@ -1,5 +1,6 @@
 CREATE DATABASE IF NOT EXISTS beauty_salon_db
 CHARACTER SET utf8mb4
+-- tom jijig useg yalgahgui 
 COLLATE utf8mb4_unicode_ci;
 
 USE beauty_salon_db;
