@@ -12,10 +12,8 @@ CREATE TABLE IF NOT EXISTS staff (
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ====================================================
 -- АЖЛЫН ЦАГ (staff_schedule) — өдөр тутмын ажиллах цаг
 -- Хэрэв тухайн өдөр байхгүй бол амралт
--- ====================================================
 CREATE TABLE IF NOT EXISTS staff_schedule (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     staff_id   INT NOT NULL,
@@ -25,9 +23,7 @@ CREATE TABLE IF NOT EXISTS staff_schedule (
     FOREIGN KEY (staff_id) REFERENCES staff(id)
 );
 
--- ====================================================
--- APPOINTMENTS-Д staff_id нэмэх
--- ====================================================
+-- APPOINTMENTS-Д staff_id нэмэх\
 ALTER TABLE appointments
     ADD COLUMN IF NOT EXISTS staff_id INT DEFAULT NULL,
     ADD CONSTRAINT fk_appt_staff FOREIGN KEY (staff_id) REFERENCES staff(id);

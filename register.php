@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                            placeholder="8 оронтой дугаар"
                            value="<?php echo htmlspecialchars($phone); ?>"
                            maxlength="8">
-                    <div class="validation-hint" id="hint_phone">📱 8 оронтой тоо оруулна уу (жишээ: 99112233)</div>
+                    <div class="validation-hint" id="hint_phone"> 8 оронтой тоо оруулна уу (жишээ: 99112233)</div>
                 </div>
 
                 <!-- Email -->
@@ -93,10 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                            placeholder="example@gmail.com"
                            value="<?php echo htmlspecialchars($email); ?>"
                            autocomplete="email">
-                    <div class="validation-hint" id="hint_email">📧 Зөв формат: name@domain.com</div>
+                    <div class="validation-hint" id="hint_email"> Зөв формат: name@domain.com</div>
                 </div>
 
-                <!-- Нууц үг -->
                 <div class="mb-3">
                     <label for="password">Нууц үг</label>
                     <div style="position:relative;">
@@ -109,7 +108,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             👁
                         </button>
                     </div>
-                    <!-- Password strength -->
                     <div id="pwdStrength" style="margin-top:8px;display:none;">
                         <div style="display:flex;gap:4px;margin-bottom:4px;">
                             <div class="strength-bar" id="sb1" style="height:3px;flex:1;border-radius:2px;background:var(--brown-pale);transition:background 0.3s;"></div>
@@ -121,7 +119,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
-                <!-- Нууц үг давтах -->
                 <div class="mb-4">
                     <label for="password2">Нууц үг давтах</label>
                     <input type="password" id="password2" name="password2"

@@ -10,15 +10,12 @@ include "includes/header.php";
 $success = "";
 $error   = "";
 
-// ── Үйлчилгээний жагсаалт ──
 $services = [];
 $res = mysqli_query($conn, "SELECT * FROM services ORDER BY name ASC");
 while ($row = mysqli_fetch_assoc($res)) {
     $services[$row["id"]] = $row;
 }
 
-// ── Үйлчилгээний роль холбоо ──
-// role = staff.role
 $service_role_map = [
     "hairstylist"   => ["Үс засалт", "Үс будалт", "засалт", "будалт"],
     "nail_tech"     => ["Маникюр", "Педикюр", "хумс"],
@@ -26,7 +23,6 @@ $service_role_map = [
     "lash_tech"     => ["Сормуус"],
 ];
 
-// Үйлчилгээ → role олдоход
 function serviceRole($serviceName, $map) {
     foreach ($map as $role => $keywords) {
         foreach ($keywords as $kw) {
@@ -38,7 +34,6 @@ function serviceRole($serviceName, $map) {
     return null;
 }
 
-// ── 30 минутын алхамтай цагийн жагсаалт ──
 $all_times = [];
 for ($h = 9; $h <= 17; $h++) {
     $all_times[] = sprintf("%02d:00:00", $h);
@@ -46,9 +41,6 @@ for ($h = 9; $h <= 17; $h++) {
         $all_times[] = sprintf("%02d:30:00", $h);
     }
 }
-// → 09:00, 09:30 ... 17:00
-
-// ── AJAX: тухайн өдрийн захиалагдсан цагуудыг буцаах ──
 if (isset($_GET["ajax_slots"])) {
     header("Content-Type: application/json");
     $date     = $_GET["date"]     ?? "";
@@ -61,8 +53,6 @@ if (isset($_GET["ajax_slots"])) {
     }
 
     $duration = $services[$serv_id]["duration_minutes"] ?? 30;
-
-    // Энэ staff-ийн захиалгатай цагуудыг авах
     $stmt = mysqli_prepare($conn,
         "SELECT appointment_time, s.duration_minutes
          FROM appointments a
@@ -75,24 +65,19 @@ if (isset($_GET["ajax_slots"])) {
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    $blocked = []; // Эзлэгдсэн цагуудын минут
+    $blocked = [];
     while ($r = mysqli_fetch_assoc($result)) {
         $start = strtotime($r["appointment_time"]) - strtotime("00:00:00");
         $startMin = (int)($start / 60);
         $endMin   = $startMin + (int)$r["duration_minutes"];
-        // Хоорондох бүх 30 минутын slots-ыг эзлэгдсэн гэж тэмдэглэнэ
         for ($m = $startMin; $m < $endMin; $m += 30) {
             $blocked[] = sprintf("%02d:%02d:00", floor($m / 60), $m % 60);
         }
     }
 
-    // Шинэ захиалга хийгдсэний дараа дараагийн захиалга авах боломжтой цаг тооцоолно
-    // Хэрэв хугацаа 30 минутаас дээш бол дараагийн slots-ыг ч бас block хийх
     echo json_encode(["booked" => array_unique($blocked), "duration" => $duration]);
     exit;
 }
-
-// ── AJAX: тухайн өдрийн ажиллах staff-ийн жагсаалт ──
 if (isset($_GET["ajax_staff"])) {
     header("Content-Type: application/json");
     $date    = $_GET["date"]       ?? "";
@@ -105,8 +90,6 @@ if (isset($_GET["ajax_staff"])) {
 
     $serv_name = $services[$serv_id]["name"] ?? "";
     $role      = serviceRole($serv_name, $service_role_map);
-
-    // Тухайн өдөр ажиллах staff
     $sql = "
         SELECT s.id, s.full_name, s.role_label, s.avatar_initials, s.bio
         FROM staff s
@@ -125,7 +108,11 @@ if (isset($_GET["ajax_staff"])) {
     }
 
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    if ($role) {
+        mysqli_stmt_bind_param($stmt, "ss", $date, $role);
+    } else {
+        mysqli_stmt_bind_param($stmt, "s", $date);
+    }
     mysqli_stmt_execute($stmt);
     $r = mysqli_stmt_get_result($stmt);
 
